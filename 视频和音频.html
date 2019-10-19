@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>音频和视频文件</title>
+</head>
+<body>
+    <!-- audio 音频
+        src: 播放文件路径
+        controls：音频播放控制面板
+        autoplay:音频自动播放
+        loop:循环播放
+    -->
+    <audio src="./public/media/1.mp3" controls autoplay loop></audio>
+    <!-- video 音频
+        src: 播放文件路径
+        controls：音频播放控制面板
+        autoplay:音频自动播放
+        loop:循环播放
+        width：宽度
+        height：高度
+        poster:当前视频还没有完全下载或者用户没有点击前，显示的封面。默认显示的时视频第一帧图片
+        注意：
+            设置高度或宽度时，只需要设置其中一个即可，会等比例缩放
+    -->
+    <video src="./public/media/1.mp4" controls width="200px"></video>
+    <!-- 兼容不同浏览器写法-->
+    <video controls width="200px">
+        <source src="./public/media/1.mp4"></source>
+    </video>
+</body>
+</html>

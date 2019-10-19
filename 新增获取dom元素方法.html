@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        <li>通过元素获取</li>
+        <li class="red">通过类获取</li>
+        <li id="c">C++</li>
+        <li id="php">PHP</li>
+    </ul>
+
+    <script>
+        window.onload=function(){
+            //通过元素获取单个
+            var f1=document.querySelector('li');
+            console.log(f1);
+            //通过class获取元素单个
+            var f2=document.querySelector('.red');
+            console.log(f2);
+            //通过id获取元素单个
+            var f3=document.querySelector('#c');
+            console.log(f3);
+
+            //获取多个
+            var f4 = document.querySelectorAll('li');
+            console.log(f4);
+
+        }
+    </script>
+</body>
+</html>

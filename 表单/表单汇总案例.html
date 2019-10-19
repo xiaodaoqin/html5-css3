@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+</head>
+<style>
+    input{
+        display:block;
+        width:100%;
+        border:none;
+        border:1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
+<body>
+<!-- 主体部分 -->
+<main>
+    <form action="">
+        <fieldset>
+            <legend>学生档案</legend>
+            <!-- url验证必须合法的url地址 必须包含http://或https://  -->
+            <p>URL：<input type="url"/></p>
+            <!-- email 默认提供了电子邮箱的完整验证 -->
+            <p>Email：<input type="email"/></p>
+            <!-- tel属性主要目的不是实现验证，它本质时为了能够在移动端打开数字键盘。意味着数字键盘限制了用户只能输入数字。 简单测试：可以通过qq发送文件》》手机端使用qq接收》》使用手机浏览器查看-->
+            <p>Tel：<input type="tel"/></p>
+            <!--number 只能输入数字 -->
+            <p>Number：<input type="number" id="number" min="0" max="100" value="30"/></p>
+
+            <!-- 根据nubmer值设置度量 -->
+            <p>
+                度量Meter：
+                <meter id="meter" value="30" min="0" max="100" high="90" low="30"></meter>
+            </p>
+
+            <!--Search 可以提供更人性化的输入体验-->
+            <p>Search：<input type="search"/></p>
+            <!--游标range 限定范围-->
+            <p>Range：<input id="range" type="range" max="100" min="0" value="20"/></p>
+            <!--进度条 -->
+            <p>
+                <progress id="progress" value="20" min="0" max="100"></progress>
+            </p>
+
+            <!--color 颜色拾取-->
+            <p>Color：<input type="color"/></p>
+            <!-- 日期相关 -->
+            <!-- 时间：时分秒 -->
+            <p>Time：<input type="time"/></p>
+            <!-- 日期：年月日 -->
+            <p>Date：<input type="date"/></p>
+            <!-- 日期：年月日 时分秒-->
+            <!-- <p>Datetime：<input type="datetime"/></p> 目前只有苹果 safari支持-->
+            <p>Date-local：<input type="datetime-local"/></p>
+
+            <input type="submit" value="提交">
+        </fieldset>
+
+    </form>
+</main>
+<script>
+    window.onload=function(){
+        //根据number值控制度量meter的变化
+        document.getElementById('number').oninput=function(){
+            var value = this.value;
+            document.getElementById('meter').value=value;
+        }
+
+        //根据range的值，控制进度条progress的值
+        document.getElementById('range').oninput=function(){
+            var value= this.value;
+            document.getElementById('progress').value=value;
+        }
+
+    }
+</script>
+</body>
+</html>

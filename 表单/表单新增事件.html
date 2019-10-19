@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>表单新增事件</title>
+</head>
+<body>
+    <form>
+        <p>Oninput：<input type="text" id="test"/></p>
+        <p>Oninvalid：<input type="text" required id="test2" pattern="^1d{10}"/></p>
+        <p><input type="submit"></p>
+    </form>
+    <script>
+        window.onload=function(){
+            document.getElementById('test').oninput=function(){
+                console.log('oninput:'+this.value);
+            }
+            //对比onkeyup
+            document.getElementById('test').onkeyup=function(){
+                console.log('onkeyup:'+this.value);
+            }
+
+            //oninvalid
+            document.getElementById('test2').oninvalid=function(){
+                //设置默认的提示信息
+                this.setCustomValidity('请输入合法的手机号！');
+            }
+        }
+    </script>
+</body>
+</html>
