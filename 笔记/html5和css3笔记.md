@@ -37,7 +37,9 @@
 - IE8或IE8以下版本不支持语义化标签，需要解决该问题，需要通过javascript创建对应的标签`document.createElement("header")`
 - 引入第三方`html5shiv.min.js`文件解决兼容问题
 
-### 新增表单type属性
+### 表单相关
+
+#### 新增表单type属性
 
 - url
 
@@ -103,7 +105,7 @@
 </html>
 ```
 
-### 新增表单其他属性
+#### 新增表单其他属性
 
 - placeholder 输入文件提醒
 - autofocus 自动获取焦点
@@ -140,7 +142,7 @@
 </html>
 ```
 
-### 表单新增属性datalist
+#### 表单新增属性datalist
 
 目前只有chome浏览器支持，其他浏览器都不支持，不推荐使用
 
@@ -180,6 +182,278 @@
 
 </body>
 </html>
+```
+
+#### 表单新增事件
+
+- oninput
+
+  监听当前元素内容的改变：只要内容改变（添加内容、删除内容），就会触发该事件
+
+  与`onkeyup`或`onkeydown`对比，`oninput`可以监控粘贴内容的变化。
+
+- oninvalid
+
+  当表单验证不通过时触发
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>表单新增事件</title>
+</head>
+<body>
+    <form>
+        <p>Oninput：<input type="text" id="test"/></p>
+        <p>Oninvalid：<input type="text" required id="test2" pattern="^1d{10}"/></p>
+        <p><input type="submit"></p>
+    </form>
+    <script>
+        window.onload=function(){
+            document.getElementById('test').oninput=function(){
+                console.log('oninput:'+this.value);
+            }
+            //对比onkeyup
+            document.getElementById('test').onkeyup=function(){
+                console.log('onkeyup:'+this.value);
+            }
+
+            //oninvalid
+            document.getElementById('test2').oninvalid=function(){
+                //设置默认的提示信息
+                this.setCustomValidity('请输入合法的手机号！');
+            }
+        }
+    </script>
+</body>
+</html>
+
+```
+
+#### 进度条和度量器
+
+- 进度条
+
+  `<progress max="100" value="50"></progress>` 
+
+   max代表最大值，value代表当前值
+
+- 度量器
+
+  `<meter max="100" min="0" high="80" low="40" value="30"></meter>`
+
+  high：规定较高的值
+
+  low：规定较低的值
+
+  max：最大值
+
+  min：最小值
+
+  value：当前进度
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <progress></progress>
+    </div>
+<!--
+    max:最大值
+    value:当前值
+-->
+    <div>
+        <progress max="100" value="50"></progress>
+    </div>
+
+    <p>
+        度量器：
+        <meter min="0" max="100" high="90" low="30" value="40"></meter>
+    </p>
+</body>
+</html>
+```
+
+#### 表单汇总案例
+
+展示表单所有的显示共功能
+
+![1571455575620](C:\Users\rufeike\AppData\Roaming\Typora\typora-user-images\1571455575620.png)
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+</head>
+<style>
+    input{
+        display:block;
+        width:100%;
+        border:none;
+        border:1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
+<body>
+<!-- 主体部分 -->
+<main>
+    <form action="">
+        <fieldset>
+            <legend>学生档案</legend>
+            <!-- url验证必须合法的url地址 必须包含http://或https://  -->
+            <p>URL：<input type="url"/></p>
+            <!-- email 默认提供了电子邮箱的完整验证 -->
+            <p>Email：<input type="email"/></p>
+            <!-- tel属性主要目的不是实现验证，它本质时为了能够在移动端打开数字键盘。意味着数字键盘限制了用户只能输入数字。 简单测试：可以通过qq发送文件》》手机端使用qq接收》》使用手机浏览器查看-->
+            <p>Tel：<input type="tel"/></p>
+            <!--number 只能输入数字 -->
+            <p>Number：<input type="number" id="number" min="0" max="100" value="30"/></p>
+
+            <!-- 根据nubmer值设置度量 -->
+            <p>
+                度量Meter：
+                <meter id="meter" value="30" min="0" max="100" high="90" low="30"></meter>
+            </p>
+
+            <!--Search 可以提供更人性化的输入体验-->
+            <p>Search：<input type="search"/></p>
+            <!--游标range 限定范围-->
+            <p>Range：<input id="range" type="range" max="100" min="0" value="20"/></p>
+            <!--进度条 -->
+            <p>
+                <progress id="progress" value="20" min="0" max="100"></progress>
+            </p>
+
+            <!--color 颜色拾取-->
+            <p>Color：<input type="color"/></p>
+            <!-- 日期相关 -->
+            <!-- 时间：时分秒 -->
+            <p>Time：<input type="time"/></p>
+            <!-- 日期：年月日 -->
+            <p>Date：<input type="date"/></p>
+            <!-- 日期：年月日 时分秒-->
+            <!-- <p>Datetime：<input type="datetime"/></p> 目前只有苹果 safari支持-->
+            <p>Date-local：<input type="datetime-local"/></p>
+
+            <input type="submit" value="提交">
+        </fieldset>
+
+    </form>
+</main>
+<script>
+    window.onload=function(){
+        //根据number值控制度量meter的变化
+        document.getElementById('number').oninput=function(){
+            var value = this.value;
+            document.getElementById('meter').value=value;
+        }
+
+        //根据range的值，控制进度条progress的值
+        document.getElementById('range').oninput=function(){
+            var value= this.value;
+            document.getElementById('progress').value=value;
+        }
+
+    }
+</script>
+</body>
+</html>
+
+```
+
+### 媒体标签
+
+#### radio 音频 
+
+#### video 视频
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>音频和视频文件</title>
+</head>
+<body>
+    <!-- audio 音频
+        src: 播放文件路径
+        controls：音频播放控制面板
+        autoplay:音频自动播放
+        loop:循环播放
+    -->
+    <audio src="./public/media/1.mp3" controls autoplay loop></audio>
+    <!-- video 音频
+        src: 播放文件路径
+        controls：音频播放控制面板
+        autoplay:音频自动播放
+        loop:循环播放
+        width：宽度
+        height：高度
+        poster:当前视频还没有完全下载或者用户没有点击前，显示的封面。默认显示的时视频第一帧图片
+        注意：
+            设置高度或宽度时，只需要设置其中一个即可，会等比例缩放
+    -->
+    <video src="./public/media/1.mp4" controls width="200px"></video>
+    <!-- 兼容不同浏览器写法-->
+    <video controls width="200px">
+        <source src="./public/media/1.mp4"></source>
+    </video>
+</body>
+</html>
+```
+
+### 获取DOM元素
+
+html5中新增的获取元素的选择
+
+- document.querySelector("元素|类名|id") 获取单个
+- document.queryAll("元素|类名|id") 获取多个
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        <li>通过元素获取</li>
+        <li class="red">通过类获取</li>
+        <li id="c">C++</li>
+        <li id="php">PHP</li>
+    </ul>
+
+    <script>
+        window.onload=function(){
+            //通过元素获取单个
+            var f1=document.querySelector('li');
+            console.log(f1);
+            //通过class获取元素单个
+            var f2=document.querySelector('.red');
+            console.log(f2);
+            //通过id获取元素单个
+            var f3=document.querySelector('#c');
+            console.log(f3);
+
+            //获取多个
+            var f4 = document.querySelectorAll('li');
+            console.log(f4);
+
+        }
+    </script>
+</body>
+</html>
+
+
 ```
 
 
