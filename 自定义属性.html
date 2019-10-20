@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <main>
+        <p data-user-name="rufeike">如非客课学习</p>
+    </main>
+    <script>
+        window.onload=function(){
+            // 获取对象
+            var p = document.querySelector('p');
+            //取值 把data-后的单词使用camel驼峰命名法连接
+            var value = p.dataset["userName"];
+            console.log(value);
+        }
+    </script>
+</body>
+</html>

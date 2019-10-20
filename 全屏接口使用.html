@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #show_box{
+            border:2px solid #eaeaea;
+            height: 300px;
+            width:80%;
+            margin:20px auto;
+            background-color: #cccccc;
+        }
+
+    </style>
+</head>
+<body>
+    <main id="show_box">
+        <div class="show_content"></div>
+        <div class="tool_box">
+            <button id="full">全屏</button>
+            <button id="cancelFull">取消全屏</button>
+            <button id="isFull">是否全屏</button>
+        </div>
+    </main>
+
+    <script>
+        window.onload=function(){
+            //设置全屏
+            document.querySelector('#full').onclick=function(){
+                var box=document.querySelector('#show_box');
+                if(box.requestFullScreen){
+                    box.requestFullscreen();
+                }else if(box.webkitRequestFullScreen){//chome
+                    box.webkitRequestFullScreen();
+                }else if(box.mozRequestFullScreen){//fox
+                    box.mozRequestFullScreen();
+                }else if(box.msRequestFullScreen){//ie
+                    box.msRequestFullScreen();
+                }else if(box.oRequestFullScreen){//opera
+                    box.oRequestFullScreen();
+                }
+            }
+
+            //取消全屏
+            //注意：退出全屏时，只有通过document来引用
+            document.querySelector('#cancelFull').onclick=function(){
+                if(document.cancelFullScreen){
+                    document.cancelFullScreen();
+                }else if(document.webkitCancelFullScreen){//chome
+                    document.webkitCancelFullScreen();
+                }else if(document.mozCancelFullScreen){//fox
+                    document.mozCancelFullScreen();
+                }else if(document.msCancelFullScreen){//ie
+                    document.msCancelFullScreen();
+                }else if(document.oCancelFullScreen){//opera
+                    document.oCancelFullScreen();
+                }
+            }
+
+            //判断是否全屏
+            document.querySelector('#isFull').onclick=function(){
+                //注意：只有fox下 fullScreenElent 严格遵守驼峰命名
+                var flag = document.fullscreenElement || document.webkitFullscreenElement ||document.mozFullScreenElement ||document.msFullscreenElement ||document.oFullscreenElement;
+                if(flag){
+                   alert('全屏状体');
+                }else{
+                    alert('非全屏状体');
+                }
+            }
+
+        }
+    </script>
+</body>
+</html>

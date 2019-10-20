@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        main>div{
+            width:200px;
+            height: 200px;
+            border:1px solid #333;
+            float:left;
+            margin-left:15px;
+        }
+        p{
+            background-color: #cccccc;
+            border:1px solid #999;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="box">
+            <p draggable="true" id="p1">拖拽我试一试</p>
+            <p draggable="true" id="p2">还有我也可以拖拽哦</p>
+        </div>
+        <div class="box" id="target_box">
+
+        </div>
+    </main>
+
+    <script>
+        window.onload = function(){
+            //被拖拽目标
+            var p1 = document.querySelector('#p1');
+
+            //拖拽开始
+            p1.ondragstart = function(){
+                // console.log('ondragstart');
+            }
+            //拖拽离开原理位置时
+            p1.ondragleave = function(){
+                // console.log('ondragleave');
+            }
+
+            //拖拽进行中
+            p1.ondrag = function(){
+                console.log('ondrag');
+            }
+
+            //拖拽结束时
+            p1.ondragend= function(){
+                // console.log('ondragend');
+            }
+
+
+
+            //拖拽放入目标
+            var targetBox = document.querySelector('#target_box');
+            //拖拽进入
+            targetBox.ondragenter = function(){
+                // console.log('ondragenter');
+            }
+            //拖拽在区域上停留
+            targetBox.ondragover= function(e){
+                e.preventDefault();
+            }
+
+            //在目标区域中松开时
+            targetBox.ondrop = function(){
+                console.log('ondrop');
+                targetBox.appendChild(p1);
+            }
+
+            //鼠标离开时
+            targetBox.ondragleave= function(){
+                // console.log('ondragleave');
+            }
+
+        }
+    </script>
+</body>
+</html>

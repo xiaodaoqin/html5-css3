@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul li{
+            list-style: none;
+            float:left;
+            width:100px;
+            height: 100px;
+            margin-left:15px;
+            border:1px solid #cccccc;
+        }
+        ul:after{
+            display: block;
+            content:'';
+            clear:both;
+        }
+        input{
+           margin:15px;
+        }
+
+        .red{
+            background-color: #ff0000;
+        }
+
+        .green{
+            background-color: #00ff00;
+        }
+
+        .blue{
+            background-color:#0000ff;
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <ul>
+            <li></li>
+            <li class="green"></li>
+            <li class="blue"></li>
+            <li class="red"></li>
+        </ul>
+        <div>
+            <input type="button" value="第1个元素添加red样式" id="add">
+            <input type="button" value="第2个元素移除green样式" id="remove">
+            <input type="button" value="第3个元素blue样式切换" id="toggle">
+            <input type="button" value="判断第4个元素是否存在red样式" id="contain">
+        </div>
+    </main>
+    <script>
+        window.onload=function(){
+            //增加
+            document.querySelector('#add').onclick=function(){
+                document.querySelector('li').classList.add("red");
+            }
+
+            //移除
+            document.querySelector('#remove').onclick=function(){
+                document.querySelector('.green').classList.remove('green');
+            }
+
+            //切换
+            document.querySelector('#toggle').onclick=function(){
+                document.querySelectorAll('li')[2].classList.toggle('blue');
+            }
+
+            //判断
+            document.querySelector('#contain').onclick=function(){
+                var ret=document.querySelectorAll('li')[3].classList.contains('red');
+                alert(ret);
+            }
+
+        }
+    </script>
+</body>
+</html>

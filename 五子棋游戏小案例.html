@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>五子棋</title>
+    <style>
+        *{padding:0;margin:0px;box-sizing: border-box;}
+        body{min-width: 900px;}
+        header{height:120px;background-color: #999999}
+        header h3{line-height: 120px;text-align: center}
+        main{}
+        aside{float:left;width:120px;background-color: orange;height:500px;}
+        article{margin-left:120px;height: 500px;}
+        footer{width:100%;height:80px;background-color: #cccccc;min-width:900px;}
+        footer p{text-align: center;line-height: 80px}
+
+        /*棋子*/
+        .chess_box{
+            width:100px;
+            height: 100px;
+            margin:25px auto;
+            -moz-user-select:none; /* Firefox私有属性 */
+            -webkit-user-select:none; /* WebKit内核私有属性 */
+            -ms-user-select:none; /* IE私有属性(IE10及以后) */
+            -khtml-user-select:none; /* KHTML内核私有属性 */
+            -o-user-select:none; /* Opera私有属性 */
+            user-select:none; /* CSS3属性 */
+        }
+        .chess{
+            position:relative;
+            width:30px;
+            height: 30px;
+            background-color: #333;
+            radial-gradient(10px 10px at 15px 15px,#fff,#333);
+            border-radius: 50%;
+            margin:10px auto;
+            box-shadow:2px 2px 4px rgba(0,0,0,0.3);
+            cursor:pointer;
+        }
+        .chess_white{
+            background-color: #eeeeee;
+            radial-gradient(15px 15px at 15px 15px,#fff,#e2e2e2);
+        }
+
+        .chess:after{
+            content: "";
+            display: block;
+            width: 10px;
+            height: 5px;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 2px;
+            transform: rotate(-45deg);
+            background: radial-gradient(10px 5px at 5px 2px,#fff,#aaa);
+            box-shadow: 0 0 8px #fff;
+        }
+
+        .chess_white:after{
+            transform: rotate(-60deg);
+            background: radial-gradient(20px 10px at 10px 5px,#fff,#cccc);
+            box-shadow: 0 0 8px #fff;
+        }
+        .chess[draggable=false]:hover{
+
+            cursor:not-allowed;
+        }
+
+        .chess_name{
+            text-align: center;
+        }
+
+
+
+        /*棋盘*/
+        article{padding:30px;}
+        .chessboard{
+            margin:0 auto;
+            width:700px;
+            height: 700px;
+            background:url("./public/images/chessboard.jpg") center center no-repeat;
+            background-size: contain;
+            padding:22px;
+        }
+        .chessboard table{
+            height: 100%;
+        }
+
+        .chessboard table td{
+            width:40px;
+            height:40px;
+            /*border:1px dashed #f00;*/
+        }
+        .chessboard table td .chess{
+            margin:0px auto;
+        }
+
+
+
+        p{
+            text-align: center;
+        }
+        select{
+            border:none;
+            border:1px solid #eee;
+            height: 25px;
+            width:100px;
+        }
+        .now_step{
+            padding:30px 10px;
+        }
+        .step_text{
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+        }
+        .step_color{
+            display: inline-block;
+            width:25px;
+            height: 25px;
+            background-color: #333333;
+        }
+
+    </style>
+
+    <script>
+        window.onload=function(){
+            init();
+
+
+            //判读当前步骤
+            document.querySelector('#priority').oninput=function(){
+                if(this.value==0){
+                    document.querySelector('.step_color').style.backgroundColor='#333';
+                    document.querySelector('.white_box .chess').setAttribute('draggable','false');
+                    document.querySelector('.black_box .chess').setAttribute('draggable','true');
+                }else{
+                    document.querySelector('.step_color').style.backgroundColor='#fff';
+                    document.querySelector('.black_box .chess').setAttribute('draggable','false');
+                    document.querySelector('.white_box .chess').setAttribute('draggable','true');
+                }
+
+            }
+
+            // 实现拖拽步骤
+            var chesses = document.querySelectorAll('.chess_box .chess');
+            var target_boxs = document.querySelectorAll('td');
+
+            // 第一步实现拖拽
+            chesses.forEach(item=>{
+                item.ondragstart = function(e){
+                    var html= e.target.outerHTML;
+                    e.dataTransfer.setData('text/html',html);
+                }
+                item.ondrag = function(e){
+
+                }
+                item.ondragleave = function(e){
+                    console.log('ondrapleave');
+                }
+                item.ondragend = function(e){
+
+                }
+            })
+
+
+            //棋盘接收
+            target_boxs.forEach(item=>{
+                //拖拽接收位置
+                item.ondrogenter = function(e){
+
+                }
+
+                //注意 实现拖拽，在ondrapover时必须阻止默认行为
+                item.ondragover = function(e){
+                    e.preventDefault();
+
+                }
+
+                //拖拽目标位置松开鼠标
+                item.ondrop = function(e){
+                    //锁死下棋优先设置选择
+                    document.querySelector('#priority').setAttribute('disabled',true);
+
+                    var html = e.dataTransfer.getData('text/html');
+                    //判读是否为白棋
+                    if(html.includes('chess_white')){
+                        document.querySelector('.step_color').style.backgroundColor='#333';
+                        document.querySelector('.black_box .chess').setAttribute('draggable','true');
+                        document.querySelector('.white_box .chess').setAttribute('draggable','false');
+                    }else{
+                        document.querySelector('.step_color').style.backgroundColor='#fff';
+                        document.querySelector('.black_box .chess').setAttribute('draggable','false');
+                        document.querySelector('.white_box .chess').setAttribute('draggable','true');
+                    }
+
+                    e.target.innerHTML=html;
+
+                    //去除draggable属性
+                    document.querySelectorAll('td .chess').forEach(item=>{
+                        item.setAttribute('draggable','false');
+                    })
+                }
+
+                item.ondragleave = function(e){
+
+                }
+            })
+
+        }
+
+        window.onresize = function(){
+            init();
+        }
+
+        //初始化主要显示区域高度
+        function init(){
+            var height=window.innerHeight;
+            height = height>970?height:970;
+            document.querySelector('aside').style.height=(height-200)+'px';
+            document.querySelector('article').style.height=(height-200)+'px';
+        }
+    </script>
+</head>
+<body>
+<header>
+    <h3>五子棋</h3>
+</header>
+<main>
+    <aside>
+        <div class="chess_box black_box">
+            <div class="chess" draggable="true"></div>
+            <div class="chess_name">黑棋</div>
+        </div>
+        <div class="chess_box white_box">
+            <div class="chess chess_white" draggable="false"></div>
+            <div class="chess_name">白棋</div>
+        </div>
+        <div>
+            <p>
+                <select id="priority">
+                    <option value="0">黑棋先走</option>
+                    <option value="1">白棋先走</option>
+                </select>
+            </p>
+        </div>
+        <div class="now_step">
+            <span class="step_text">当前：</span>
+            <span class="step_color"></span>
+        </div>
+    </aside>
+    <article>
+        <div class="chessboard">
+            <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </article>
+</main>
+<footer>
+    <p>如非客 &copy;Copy rueike2019</p>
+</footer>
+
+</body>
+</html>

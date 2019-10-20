@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #show_box {
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <form action="" enctype="multipart/form-data">
+        <p>
+            选择图片：
+            <input type="file" name="file" id="file"/>
+        </p>
+        <p>
+            <img src="" alt="" id="show_box">
+        </p>
+        <p>
+            <input type="submit" value="提交">
+        </p>
+    </form>
+</main>
+<script>
+    window.onload = function () {
+        document.querySelector('#file').oninput = function () {
+            var files = this.files;//值为数组
+            var reader = new FileReader();
+            /**
+             * readAsDataURL 需要传递一个文件 (图片或其他可以嵌入文档的文件）
+             */
+            reader.readAsDataURL(files[0]);
+            reader.onload = function () {
+                document.querySelector('#show_box').src = reader.result;
+            }
+
+        }
+    }
+</script>
+</body>
+</html>
