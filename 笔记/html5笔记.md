@@ -1,4 +1,4 @@
-# H5和CSS3笔记
+# H5笔记
 
 ## html5
 
@@ -843,6 +843,184 @@ html5中新增的获取元素的选择
   - <span style="color:red">如果需要触发ondrop事件，就必须在ondragover事件中阻止默认行为 `e.preventDefault()`</span>
 
 #### 地理位置接口
+
+##### 。navigator.geolocation
+
+- navigator.geolocation.getCurrentPosition(success(position){},error(){},option);
+  - 如果获取定位成功，会把获取的地理信息传递给success回调
+    - position.coords.latiitude 纬度
+    - position.coords.longitude 经度
+    - position.coords.accuracy 精度
+    - position.coords.altitude 海拔高度
+  - 失败，会回到error函数
+  - option设置的参数
+    - enableHighAccuracy:true/false 是否使用高精度
+    - timeout:设置超时时间，单位毫秒
+    - maximumAge:可以设置浏览器重新获取地理信息的时间间隔，单位毫秒
+
+#### web存储
+
+##### sessionStorage存储
+
+- 存储数据到本地，最大存储容量5mb左右；<span style="color:red">注意：</span>数据只存储在当前页面内存中,其他页面无法获取。关闭页面后也会清除。
+- setItem(key,value) 存储数据，与键值对的方式存储
+- getItem(key) 获取数据，根据key值获取对应数据
+- removeItem(key) 删除数据，根据key值删除对应的值
+- clear() 清空所有存储的数据
+
+##### localStorage存储
+
+- 存储数据到本地，最大存储容量20mb左右；<span style="color:red">注意：</span>数据只存储在本地硬盘中,其他页面可以获取。同一个浏览器中可以共享，不同浏览器不能共享。关闭页面后也不会清楚。
+- setItem(key,value) 存储数据，与键值对的方式存储
+- getItem(key) 获取数据，根据key值获取对应数据
+- removeItem(key) 删除数据，根据key值删除对应的值
+- clear() 清空所有存储的数据
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+    <form>
+        <p>
+            sessionStorage的使用：
+        </p>
+        <p>
+            <input type="text" required id="key">
+            <input type="text" id="value">
+        </p>
+
+        <p>
+            <button id="setData">设置数据</button>
+            <button id="getData">获取指定值数据</button>
+            <button id="removeData">移除指定值数据</button>
+            <button id="clearData">清除所有数据</button>
+        </p>
+    </form>
+</main>
+
+<script>
+    window.onload = function () {
+        //设置数据
+        document.querySelector('#setData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            var value = document.querySelector('#value').value;
+            window.sessionStorage.setItem(key, value);
+        })
+
+        //获取数据
+        document.querySelector('#getData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            alert('key:'+key+'对应的value是：'+window.sessionStorage.getItem(key));
+        })
+
+        //移除数据
+        document.querySelector('#removeData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            window.sessionStorage.removeItem(key);
+            alert('key:'+key+'数据已移除：')
+        })
+
+        //清除所有数据
+        document.querySelector('#clearData').addEventListener('click', function () {
+            window.sessionStorage.clear();
+        })
+
+        
+        //localStorage存储
+        
+        //设置数据
+        document.querySelector('#setData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            var value = document.querySelector('#value').value;
+            window.localStorage.setItem(key, value);
+        })
+
+        //获取数据
+        document.querySelector('#getData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            alert('key:'+key+'对应的value是：'+window.sessionStorage.getItem(key));
+        })
+
+        //移除数据
+        document.querySelector('#removeData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            window.localStorage.removeItem(key);
+            alert('key:'+key+'数据已移除：')
+        })
+
+        //清除所有数据
+        document.querySelector('#clearData').addEventListener('click', function () {
+            window.localStorage.clear();
+        })
+
+    }
+</script>
+</body>
+</html>
+
+
+```
+
+#### 应用缓存
+
+- 储存cache manifest 文件，可以缓存指定类型的文件，建议与 `.appcache`作为存储文件后缀名
+
+- 需要在html页面中增加`manifest="文本文件"`属性
+
+  
+
+缓存文件格式
+
+```c
+CACHE MANIFEST
+#CACHE MANIFEST必须处于文档第一句，用于标识文档格式
+
+#需要缓存的文件清单列表
+CACHE:
+../images/1.jpg
+../images/2.jpg
+# *:代表缓存所有文件    
+    
+    
+#配置每次都需要重新从服务器获取的文件清单列表
+NETWORK:
+../images/3.jpg
+    
+    
+#配置如果文件为无法获取使用指定的文件进行替代
+# 格式：指定文件 空格 替代文件
+FALLBACK:
+../images/4.jpg ../images/default.jpg   
+
+# /：代表所有文件
+
+```
+
+
+
+页面代码示例
+
+```html
+<!DOCTYPE html>
+<html lang="en" manifest="demo.appcache">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <img src="../images/1.jpg" alt="">
+        <img src="../images/2.jpg" alt="">
+        <img src="../images/3.jpg" alt="">
+        <img src="../images/4.jpg" alt="">
+    </body>
+</html>
+```
+
+
 
 #### 接口案例
 
@@ -1780,6 +1958,4 @@ html5中新增的获取元素的选择
 
 
 
-
-## css3
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        main{
+            width:300px;
+            margin:0 auto;
+        }
+        
+        main div{
+            background: #999999;
+            color:#ffffff;
+            text-align: center;
+            margin-bottom: 15px;
+            line-height: 100px;
+            font-size:25px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        /*
+            text-shadow:offsetX offsetY blur color;
+         */
+
+        .demo1 {
+            text-shadow: -1px -1px 5px #ff0000;
+        }
+
+        .demo2{
+            text-shadow: 0px 0px 10px #ffffff;
+        }
+
+        /*多层阴影*/
+        .demo3{
+            text-shadow:2px 2px 5px #ff0000,3px 3px 5px #ff00ff;
+        }
+
+        /*多层阴影*/
+        .demo4{
+            color:#000000;
+            text-shadow:-1px -1px 0px #eee,-2px -2px 0px #ddd,-3px -3px 0px #ccc;
+        }
+
+
+    </style>
+</head>
+<body>
+    <main>
+        <div class="demo demo1">CSS3入门教程</div>
+        <div class="demo demo2">CSS3入门教程</div>
+        <div class="demo demo3">CSS3入门教程</div>
+        <div class="demo demo4">CSS3入门教程</div>
+    </main>
+</body>
+</html>

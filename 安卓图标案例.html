@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .icon_box{width:300px;height: 300px;margin:0 auto;border:1px solid #ececec;padding:10px;}
+        .an_header{position:relative;width:100px;height: 50px;margin:0 auto;background-color: darkgreen;border-radius: 100px 100px 0 0;margin-bottom: 5px;}
+        .an_header::before,.an_header::after{
+            content:'';
+            background-color: #ffffff;
+            position: absolute;
+            top:25px;
+            width:10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .an_header::before{left:26px;}
+        .an_header::after{right:26px;}
+        .an_body{position:relative;width:100px;height: 100px;background-color: darkgreen;margin:0px auto;border-radius: 0 0 10px 10px;}
+        .an_body::before,.an_body::after{
+            content:'';
+            position: absolute;
+            width:15px;
+            height: 70px;
+            top:10px;
+            background: darkgreen;
+            border-radius: 5px;
+        }
+        .an_body::before{left:-20px}
+        .an_body::after{right:-20px}
+        .an_footer{position:relative;width:100px;height: 100px;background-color: #ffffff;margin:0px auto;border-radius: 0 0 10px 10px;}
+        .an_footer::before,.an_footer::after{
+            content:'';
+            position: absolute;
+            width:15px;
+            height: 70px;
+            background: darkgreen;
+            border-radius:0px 0px 5px 5px;
+        }
+        .an_footer::before{left:20px}
+        .an_footer::after{right:20px}
+    </style>
+</head>
+<body>
+    <main>
+        <div class="icon_box">
+            <div class="an_header"></div>
+            <div class="an_body"></div>
+            <div class="an_footer"></div>
+        </div>
+    </main>
+</body>
+</html>

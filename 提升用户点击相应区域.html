@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提升用户点击相应区域</title>
+    <style>
+        div{
+            box-sizing: border-box;
+            width:100px;
+            height:100px;
+            margin: 100px auto;
+            background-color: rgba(255,128,0,0.2);
+            border:20px solid rgba(0,0,0,0);
+            padding:20px;
+            background-color: #eeeeee;
+            background:url('./public/images/icon.png') no-repeat;
+            cursor:pointer;
+            background-position:-56px -78px;
+            background-clip:content-box;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    </div>
+    <script>
+        document.querySelector('div').onclick=function(){
+            cosnole.log(2);
+        }
+    </script>
+</body>
+</html>

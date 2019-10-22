@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+    <form>
+        <p>
+            sessionStorage的使用：
+        </p>
+        <p>
+            <input type="text" required id="key">
+            <input type="text" id="value">
+        </p>
+
+        <p>
+            <button id="setData">设置数据</button>
+            <button id="getData">获取指定值数据</button>
+            <button id="removeData">移除指定值数据</button>
+            <button id="clearData">清除所有数据</button>
+        </p>
+    </form>
+</main>
+
+<script>
+    window.onload = function () {
+        //设置数据
+        document.querySelector('#setData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            var value = document.querySelector('#value').value;
+            window.sessionStorage.setItem(key, value);
+        })
+
+        //获取数据
+        document.querySelector('#getData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            alert('key:'+key+'对应的value是：'+window.sessionStorage.getItem(key));
+        })
+
+        //移除数据
+        document.querySelector('#removeData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            window.sessionStorage.removeItem(key);
+            alert('key:'+key+'数据已移除：')
+        })
+
+        //清除所有数据
+        document.querySelector('#clearData').addEventListener('click', function () {
+            window.sessionStorage.clear();
+        })
+
+
+        //localStorage存储
+
+        //设置数据
+        document.querySelector('#setData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            var value = document.querySelector('#value').value;
+            window.localStorage.setItem(key, value);
+        })
+
+        //获取数据
+        document.querySelector('#getData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            alert('key:'+key+'对应的value是：'+window.sessionStorage.getItem(key));
+        })
+
+        //移除数据
+        document.querySelector('#removeData').addEventListener('click', function () {
+            var key = document.querySelector('#key').value;
+            window.localStorage.removeItem(key);
+            alert('key:'+key+'数据已移除：')
+        })
+
+        //清除所有数据
+        document.querySelector('#clearData').addEventListener('click', function () {
+            window.localStorage.clear();
+        })
+
+    }
+</script>
+</body>
+</html>
