@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            -moz-user-select:none; /* Firefox私有属性 */
+            -webkit-user-select:none; /* WebKit内核私有属性 */
+            -ms-user-select:none; /* IE私有属性(IE10及以后) */
+            -khtml-user-select:none; /* KHTML内核私有属性 */
+            -o-user-select:none; /* Opera私有属性 */
+            user-select:none; /* CSS3属性 */
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 200px auto;
+            position: relative;
+            /*为了看立体效果，默认让容器旋转*/
+            transform:rotate3d(1,1,0,-30deg);
+            /*设置其子元素3Dx旋转结果*/
+            transform-style:preserve-3d;
+
+            /*定义动画执行时间*/
+            transition:transform 5s;
+        }
+
+        .box > div {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            text-align: center;
+            line-height: 200px;
+            /*设置透明度*/
+            opacity:0.8;
+        }
+
+        .front {
+            background-color: red;
+            /*沿着Y轴向前移动100px*/
+            transform:translateZ(100px);
+
+        }
+
+        .back {
+            background-color: green;
+            /*沿着Y轴后移100px*/
+            transform:translateZ(-100px);
+        }
+
+        .left {
+            background-color: blue;
+            /*先沿着X左侧移动100px，再沿着Y轴逆时针旋转90度*/
+            transform:translateX(-100px) rotateY(-90deg);
+        }
+
+        .right {
+            background-color: cyan;
+            /*先沿着X右侧移动100px，再沿着Y轴顺时针旋转90度*/
+            transform:translateX(100px) rotateY(90deg);
+        }
+
+        .top {
+            background-color: pink;
+            /*先沿着Y上方移动100px，再沿着X轴顺时针旋转90度*/
+            transform:translateY(-100px) rotateX(90deg);
+        }
+
+        .bottom {
+            backgrond-color: purple;
+            /*先沿着Y下方移动100px，再沿着X轴逆时针旋转90度*/
+            transform:translateY(100px) rotateX(-90deg);
+        }
+
+        .box:active{
+            transform:rotate3d(1,1,0,360deg) rotate3d(0,1,1,360deg);
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="front">前面</div>
+    <div class="back">后面</div>
+    <div class="left">左面</div>
+    <div class="right">右面</div>
+    <div class="top">上面</div>
+    <div class="bottom">下面</div>
+</div>
+</body>
+</html>

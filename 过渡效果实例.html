@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        div{
+            width:200px;
+            height:200px;
+            background-color: red;
+            position:absolute;
+            left:100px;
+            top:100px;
+            /*过渡属性*/
+            /*transition-property: left;*/
+            /*过渡时间*/
+            /*transition-duration: 2s;*/
+            /*过渡效果*/
+            /*transition-timing-function: linear;*/
+            /*过渡延时*/
+            /*transition-delay: 0.3s;*/
+
+            /*简写*/
+            transition:left 2s linear 0.3s;
+
+            /*多个过渡效果*/
+            transition:left 2s linear 0.3s,background-color 2s linear 0.3s;
+
+            /*所用过渡效果时间设置 不推荐使用，效率差*/
+            /*transition:all 2s;*/
+
+        }
+        div:active{
+            left:1000px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <script>
+
+    </script>
+</body>
+</html>

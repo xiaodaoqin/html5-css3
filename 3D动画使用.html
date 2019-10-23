@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{transition:2s;width:100px;height:100px;margin:0 auto;margin-top:15px;background-color: #ff0000}
+        /*3d移动 由于z轴与屏幕垂直，所以无法看到效果*/
+        div:nth-child(1):active{
+            transform:translate3d(100px,200px,100px);
+        }
+        /*3d缩放 由于z轴与屏幕垂直，所以无法看到效果*/
+        div:nth-child(2):active{
+            transform:scale3d(0.2,0.5,0.3)
+        }
+
+        div:nth-of-type(3):active{
+            transform:rotate3d(1,1,0,100deg);
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</body>
+</html>

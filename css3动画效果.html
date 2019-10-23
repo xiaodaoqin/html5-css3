@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: #ff0000
+        }
+
+        div {
+            /*添加动画效果 */
+            /*1.animation-name:指定动画名称 */
+            animation-name: moveTest;
+            /*2.animation-duration: 动画总耗时时间;*/
+            animation-duration: 2s;
+            /*3.animation-iteration-count: 动画播放次数; 默认为1次，可以指定数字，指定infinite为无限循环*/
+            animation-iteration-count: infinite;
+            /*animation-direction: alternate;设置交替动画*/
+            animation-direction: alternate;
+            /*animation-delay:2s 设置延时时间秒;*/
+            animation-delay: 2s;
+
+            /*animation-fill-mode: forwards|backwards|both;
+               forwords:会保留动画结束时的状态
+               backwords:不会保留动画结束时的状态；
+               both:会保留动画结束时的状态
+            设置动画结束时状态,动画结束时，默认会恢复原来状态*/
+            animation-fill-mode: forwards;
+            /*设置动画的时间函数*/
+            animation-timing-function: linear;
+            /*设置动画的播放状态 paused 暂停 running 播放*/
+            animation-play-state: running;
+
+        }
+
+        @keyframes moveTest {
+            0% {
+                transform: translate(100px);
+            }
+            50% {
+                transform: translate(100px, 200px);
+            }
+            100% {
+                transform: translate(200px, 400px);
+            }
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

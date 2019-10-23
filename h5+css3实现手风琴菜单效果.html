@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0
+        }
+
+        main {
+            width: 120px;
+            margin: 30px auto;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        h3 {
+            background-color: #cccccc;
+            padding: 0 10px;
+            line-height: 30px;
+            border-bottom: 2px solid #bbbbbb
+        }
+
+        .sub_item_box>ul{
+            background-color: #ececec;
+            padding: 10px;
+        }
+
+        .sub_item_box{
+            overflow:hidden;
+            height: 0px;
+            transition-property: height;
+            transition-duration: 0.5s;
+
+        }
+
+        .item_box>li:hover .sub_item_box{
+            height: 100px;
+        }
+
+        .sub_item_box li {
+            line-height: 20px;
+            border-bottom: 1px solid #cecece;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <ul class="item_box">
+        <li>
+            <h3>主菜单一</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h3>主菜单二</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h3>主菜单三</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h3>主菜单四</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+</main>
+</body>
+</html>

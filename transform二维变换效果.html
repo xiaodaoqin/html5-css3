@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: #ff0000;
+            /*增加过渡效果*/
+            transition:transform 2s;
+            margin-bottom: 10px;
+        }
+
+        /*移动*/
+        div:nth-of-type(1):hover {
+            /*
+            使用transform可以实现元素移动
+            移动参照：左上角
+            执行完毕后会恢复原始状态
+             */
+            /*向右移动 100px*/
+            /*transform:translate(100px);*/
+            transform:translate(200px,200px);
+        }
+
+        /*缩放*/
+        div:nth-of-type(2):hover{
+            transform:scale(1.1);
+        }
+
+        /*旋转*/
+        div:nth-of-type(3):hover{
+            transform:rotate(380deg);
+            transform-origin: top;
+        }
+        /*斜切*/
+        div:nth-of-type(4):hover{
+            transform:skew(30deg);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+</body>
+</html>

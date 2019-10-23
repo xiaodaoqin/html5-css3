@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*时钟外壳*/
+        .clock {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 10px solid #999999;
+            margin: 100px auto 0;
+            border-radius: 50%;
+        }
+
+        .clock div {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #999999;
+        }
+
+        /*时钟刻度*/
+        .clock .line {
+            width: 6px;
+            height: 200px;
+        }
+
+        .clock .line1, .clock .line4 {
+            width: 10px;
+        }
+
+        .clock .line2 {
+            transform: translate(-50%, -50%) rotate(30deg);
+        }
+
+        .clock .line3 {
+            transform: translate(-50%, -50%) rotate(60deg);
+        }
+
+        .clock .line4 {
+            transform: translate(-50%, -50%) rotate(90deg);
+        }
+
+        .clock .line5 {
+            transform: translate(-50%, -50%) rotate(120deg);
+        }
+
+        .clock .line6 {
+            transform: translate(-50%, -50%) rotate(150deg);
+        }
+
+        /*时钟中间遮罩层*/
+        .clock .cover {
+            width: 175px;
+            height: 175px;
+            background-color: #ffffff;
+            border-radius: 50%;
+        }
+
+        /*时钟指针*/
+        .clock .hour {
+            width: 8px;
+            height: 50px;
+            background-color: blue;
+            border-radius: 4px 4px 0 0;
+            transform: translate(-50%, -100%);
+            /*需要按12个小时进行计算秒*/
+            animation: pointerRunning 43200s;
+        }
+
+        .clock .minute {
+            width: 6px;
+            height: 65px;
+            background-color: green;
+            border-radius: 4px 4px 0 0;
+            transform: translate(-50%, -100%);
+            /*60分钟*60秒*/
+            animation: pointerRunning 3600s;
+        }
+
+        .clock .second {
+            width: 4px;
+            height: 80px;
+            background-color: red;
+            border-radius: 4px 4px 0 0;
+            transform: translate(-50%, -100%);
+
+            /*调用动画 + 指定动画事件属性*/
+            /*animation:pointerRunning 60s linear;!*平滑移动指针*/
+            animation: pointerRunning 60s steps(60); /*跳动移动指针*/
+        }
+
+        /*指针公用属性*/
+        .clock .pointer {
+            /*动画无限循环*/
+            animation-iteration-count: infinite;
+            /*指针水平居中，垂直底部为动画轴心*/
+            transform-origin: center bottom;
+        }
+
+
+        /*时钟中间圆形*/
+        .clock .center {
+            width: 15px;
+            height: 15px;
+            background-color: gold;
+            border-radius: 50%;
+        }
+
+        /*时钟底座*/
+        .base_box{
+            width:250px;
+            height: 300px;
+            margin:0 auto;
+            border:20px solid #999999;
+            position: relative;
+        }
+
+        .base_box div{
+            position: absolute;
+            top:0;
+            left:50%;
+            transform:translate(-50%);
+        }
+        /*摆锤组件*/
+        .bob_box{
+            width:100px;
+            height: 170px;
+        }
+        .base_box .bob_top{
+            width:100px;
+            height: 50px;
+            background-color: #999999;
+            border-radius:0 0 100px 100px;
+        }
+
+        /*摆臂*/
+        .bob_handle{
+            width:15px;
+            height: 120px;
+            background-color: #999999;
+        }
+        /*摆锤*/
+        .base_box .bob{
+            width:50px;
+            height: 50px;
+            background-color: #999999;
+            border-radius: 50%;
+            top:118px;
+        }
+        /*时钟指针旋转动画*/
+        @keyframes pointerRunning {
+            from {
+                transform: translate(-50%, -100%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -100%) rotate(360deg);
+            }
+        }
+
+        /*时钟指针旋转动画*/
+        @keyframes bobMove{
+            from {
+                transform: translate(-50%, -100%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -100%) rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="clock_box">
+    <div class="clock">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="line line3"></div>
+        <div class="line line4"></div>
+        <div class="line line5"></div>
+        <div class="line line6"></div>
+        <div class="cover"></div>
+        <div class="hour pointer"></div>
+        <div class="minute pointer"></div>
+        <div class="second pointer"></div>
+        <div class="center"></div>
+    </div>
+    <div class="base_box">
+        <div class="bob_box">
+            <div class="bob_top"></div>
+            <div class="bob_handle"></div>
+            <div class="bob"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

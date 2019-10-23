@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{position:relative;height: 200px;background-color: #cccccc;margin-bottom: 15px;}
+        .circle{width:100px;height:100px;background-color: skyblue;border-radius: 50px}
+        .circle1{position:absolute;top:50%;left:50%;margin-top:-50px;margin-left:-50px;}
+        .circle2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+    </style>
+</head>
+<body>
+    <p>方式一：position定位和margin边距实现</p>
+    <div class="container">
+        <div class="circle circle1"></div>
+    </div>
+    <p>方式二：position定位+transform:translate(-50%,-50%)移动实现</p>
+    <div class="container">
+        <div class="circle circle2"></div>
+    </div>
+</body>
+</body>
+</body>
+</html>

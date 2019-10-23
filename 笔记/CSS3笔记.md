@@ -1,5 +1,6 @@
 # CSS3学习笔记
 
+
 ## 选择器
 
 ### 属性选择器
@@ -254,8 +255,7 @@ E:target：可以为锚点目标元素添加样式，当目标元素被触发为
 ## 伪元素before 、after
 
 - <div style="color:red">重点：`E::before`、`E::after`</div>
-
-  - 是一个行内元素，如果还需要设置宽高，需要设置display、position、float
+- 是一个行内元素，如果还需要设置宽高，需要设置display、position、float
   - 必须增加content属性，不管是否设置内容，`content:""`
   - 旧版写法`E:before`、`E:after` ，新版写法：`E::before`和`E::after`。
   - IE8或IE8前的版本，不支持
@@ -559,6 +559,7 @@ E:target：可以为锚点目标元素添加样式，当目标元素被触发为
   <img src="E:\web\html+css3\笔记\images\QQ图片20191022094312.png" alt="QQ图片20191022094312" style="zoom:50%;" />
 
 - 缩写：`border-image:source slice /width/outset repeat;`
+  
   - border-image:url("../image/1.jpg")  27 / 27px /0px round
 
 
@@ -566,7 +567,523 @@ E:target：可以为锚点目标元素添加样式，当目标元素被触发为
 - 边框图片-实现聊天背景案例
 
   ```html
-  
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Title</title>
+      <style>
+          .border{
+              width:300px;
+              height:auto;
+              border:10px solid #ffffff;
+              border-image-slice: 10 fill;
+              border-image-width: 10px;
+              border-image-source:url("./public/images/border.png");
+          }
+          .border2{
+              border-image-repeat: repeat;
+          }
+          .border3{
+              border-image-repeat: round;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="border">我要测试边框图片,我要测试边框图片,我要测试边框图片</div>
+      <div class="border border2">我要测试边框图片,我要测试边框图片,我要测试边框图片</div>
+      <div class="border border3">我要测试边框图片,我要测试边框图片,我要测试边框图片</div>
+  </body>
+  </html>
   ```
 
   
+
+## 过渡动画
+
+- 简写语法：`transition:property duration timing-function delay;`或按以下属性单独设置
+  - transition-property：规定设置过渡效果的css属性名称
+  - transition-duration：规定完成过度效果需要多少秒
+  - transition-timing-function：规定速度效果的速度曲线
+    - linear：规定以相同速度开始至结束的过渡效果，等同cubic-bezier(0,0,1,1)
+    - ease：规定慢速开始，然后变快，然后慢速结束的过渡效果，等同cubice-bezier（0.25,0.1,0.25,1)
+    - ease-in：规定以慢速开始的过渡效果，等同cubic-bezier（0.42,0,1,1）
+    - ease-out：规定以慢速结束的过渡效果，等同cubice-bezier(0,0,0.58,1)
+    - ease-in-out：规定以慢速开始和结束的过渡效果，等同cubic-bezier(0.42,0,0.58,1)
+    - cubic-bezier(n,n,n,n)：在cubic-bezier函数中自定义自，可取范围0-1
+  - transition-delay：定义过渡效果何时开始，单位秒
+  - transition:all 2s steps(4); steps(n)指定过渡效果分几步完成
+- 过渡效果兼容性问题：不同浏览器需要增加不同前缀处理
+  - -moz-transition:all 2s steps(4);
+  - -webkit-transition:all 2s steps(4);
+  - -o-transition:all 2s steps(4);
+  - transition:all 2s steps(4);
+- 过渡效果只能应用在具体值的变化，不能应用状体值中，如：display
+
+示例：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        div{
+            width:200px;
+            height:200px;
+            background-color: red;
+            position:absolute;
+            left:100px;
+            top:100px;
+            /*过渡属性*/
+            /*transition-property: left;*/
+            /*过渡时间*/
+            /*transition-duration: 2s;*/
+            /*过渡效果*/
+            /*transition-timing-function: linear;*/
+            /*过渡延时*/
+            /*transition-delay: 0.3s;*/
+
+            /*简写*/
+            transition:left 2s linear 0.3s;
+
+            /*多个过渡效果*/
+            transition:left 2s linear 0.3s,background-color 2s linear 0.3s;
+
+            /*所用过渡效果时间设置 不推荐使用，效率差*/
+            /*transition:all 2s;*/
+
+        }
+        div:active{
+            left:1000px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <script>
+
+    </script>
+</body>
+</html>
+```
+
+
+
+手风琴菜单效果
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0
+        }
+
+        main {
+            width: 120px;
+            margin: 30px auto;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        h3 {
+            background-color: #cccccc;
+            padding: 0 10px;
+            line-height: 30px;
+            border-bottom: 2px solid #bbbbbb
+        }
+
+        .sub_item_box>ul{
+            background-color: #ececec;
+            padding: 10px;
+        }
+
+        .sub_item_box{
+            overflow:hidden;
+            height: 0px;
+            transition-property: height;
+            transition-duration: 0.5s;
+
+        }
+
+        .item_box>li:hover .sub_item_box{
+            height: 100px;
+        }
+
+        .sub_item_box li {
+            line-height: 20px;
+            border-bottom: 1px solid #cecece;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <ul class="item_box">
+        <li>
+            <h3>主菜单一</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h3>主菜单二</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h3>主菜单三</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <h3>主菜单四</h3>
+            <div class="sub_item_box">
+                <ul>
+                    <li>子菜单1</li>
+                    <li>子菜单2</li>
+                    <li>子菜单3</li>
+                    <li>子菜单4</li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+</main>
+</body>
+</html>
+
+```
+
+
+
+## 2D转换过渡效果
+
+### transform 移动
+
+- 语法：`transform:translate(tx) | translate(tx,ty)`
+
+  - tx代表x轴（横坐标）移动方向的长度，当其值为正值时，元素向x轴右方向移动，反之，元素向x轴左方向移动
+  - ty代表y轴（纵坐标）移动方向的长度，当其值为正值时，元素向y轴<span style="color:red">下方</span>向移动，反之，元素向y轴<span style="color:red">上方</span>向移动。ty参数没有设置时，相当于ty=0
+  - 可以单独使用`translateX(tx)`或 `translateY(ty)`
+
+  示例1
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Title</title>
+      <style>
+          * {
+              padding: 0;
+              margin: 0
+          }
+  
+          div {
+              width: 100px;
+              height: 100px;
+              background-color: #ff0000;
+              /*增加过渡效果*/
+              transition:transform 2s;
+          }
+  
+          div:active {
+              /*
+              使用transform可以实现元素移动
+              移动参照：左上角
+              执行完毕后会恢复原始状态
+               */
+              /*向右移动 100px*/
+              /*transform:translate(100px);*/
+  
+              transform:translate(200px,200px);
+          }
+      </style>
+  </head>
+  <body>
+      <main>
+          <div></div>
+      </main>
+  </body>
+  </html>
+  ```
+
+  
+
+### transform 缩放
+
+- 定义：scale()让元素根据中心原点对象进行缩放，默认的值为1，因此0.01到0.99之间任意值，使一个元素缩小；而任意大于1的值，都会元素变得更大
+
+- 语法：`transform:scale(sx|ty) | scale(sx,sy)`
+- sx：指定x轴（横向坐标）方向的缩放向量，如果值为0.01~0.99之间，会使元素在x轴方向缩小，如果大于1，则放大
+- sy：指定y轴（纵向坐标）方向的缩放向量，如果值为0.01~0.99之间，会使元素在y轴方向缩小，如果大于1，则放大
+- 单独使用scaleX(sx)或scaleY(sy)
+
+
+
+示例
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: #ff0000;
+            /*增加过渡效果*/
+            transition:transform 2s;
+            margin-bottom: 10px;
+        }  
+        /*缩放*/
+        div:nth-of-type(2):hover{
+            transform:scale(1.1);
+
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div></div>
+        <div></div>
+    </main>
+</body>
+</html>
+```
+
+
+
+### transform 旋转
+
+- 定义：rotate()通过指定角度参数让元素根据中心原点对象进行旋转，正值时，顺时针转；负值时，逆时针旋转
+
+- 语法：`transform:rotate(a)`
+
+- a 代表旋转角度
+
+- 单独使用rotateX(a),rotateY(a)
+
+  
+
+### transorm 斜切
+
+- 定义：skew() 能够让元素倾斜希显示。他把可以把一个元素与中心位置围绕着x轴和y轴按照一定的角度倾斜；
+
+- 语法：`transform:skew(a)`
+- 单独使用 skewX(a),skewY(a)
+
+### 设置旋转轴心
+
+- ### `transform-origin:left`;默认值有left top right bottom center
+
+### 同时添加多个属性
+
+- transform:translateX(700px) rotate(-90 deg);
+- 注意：旋转的时候会旋转坐标轴，因此都先移动，再旋转
+
+### 实现任意元素居中
+
+- 方式一：position定位和margin边距实现，该方式受定位元素大小影响，不同宽高的元素，需要计算margin的值。
+- 方式二：position定位+transform:translate(-50%,-50%)移动实现，推荐使用，无需考虑定位元素的宽和高
+
+代码示例
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{position:relative;height: 200px;background-color: #cccccc;margin-bottom: 15px;}
+        .circle{width:100px;height:100px;background-color: skyblue}
+        .circle1{position:absolute;top:50%;left:50%;margin-top:-50px;margin-left:-50px;}
+        .circle2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+    </style>
+</head>
+<body>
+    <p>方式一：position定位和margin边距实现</p>
+    <div class="container">
+        <div class="circle circle1"></div>
+    </div>
+    <p>方式二：position定位+transform:translate(-50%,-50%)移动实现</p>
+    <div class="container">
+        <div class="circle circle2"></div>
+    </div>
+</body>
+</body>
+</body>
+</html>
+
+```
+
+## 3D转换过渡
+
+三维变化使用基于二维变换的相同属性，同样使用transform属性进行设置
+
+### 3D移动
+
+- 方法：translate3d(x,y,z)
+- 单独设置：translateX(length)，translateY(length)，translateZ(length)
+
+### 3D缩放
+
+- 方法：scale3d(x,y,z)
+- 单独设置：scaleX(a)，scaleY(a)，scaleZ(a) 
+- a取值范围0~1
+
+### 3D旋转
+
+- 方法：rotate3d(x,y,z,angle) 
+  - x,y,z代表三个方向的偏移量
+  - angle 旋转的角度
+
+### 保留过渡结果
+
+被转换的子元素保留其3d转换结果（需要设置在父元素中）
+
+- transform-style:flat;子元素将不保留其3d位置-平面方式
+- transform-style:preserve-3d;子元素将保留其3d位置 --立体方式
+
+### 景深透视效果
+
+- perspective:0px;
+- perspective-origin:0px 0px; 透视观察角度
+
+## 动画  
+
+- 指定动画名称：animation-name: moveTest;
+
+  - 定义动画
+
+  ```html
+  @keyframes moveTest {
+              0% {
+                  transform: translate(100px);
+              }
+              50% {
+                  transform: translate(100px, 200px);
+              }
+              100% {
+                  transform: translate(200px, 400px);
+              }
+          }
+  ```
+
+  
+
+- 设置动画总耗时：animation-duration: 2s;
+
+- 设置动画播放次数：animation-iteration-count: infinite; 默认为1次，可以指定数字，指定infinite为无限循环
+
+- 设置动画交替执行：animation-direction: alternate; 从动画开始到结束，再倒过来执行
+
+- 设置动画延时时间：animation-delay: 2s;
+
+- 设置动画保留状态：animation-fill-mode: forwards;
+
+- 设置动画时间函数：animation-timing-function: linear;匀速、变速
+
+- 设置动画的播放状态 ：animation-play-state: running; paused 暂停 running 播放
+
+
+
+示例代码
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: #ff0000
+        }
+
+        div {
+            /*添加动画效果 */
+            /*1.animation-name:指定动画名称 */
+            animation-name: moveTest;
+            /*2.animation-duration: 动画总耗时时间;*/
+            animation-duration: 2s;
+            /*3.animation-iteration-count: 动画播放次数; 默认为1次，可以指定数字，指定infinite为无限循环*/
+            animation-iteration-count: infinite;
+            /*animation-direction: alternate;设置交替动画*/
+            animation-direction: alternate;
+            /*animation-delay:2s 设置延时时间秒;*/
+            animation-delay: 2s;
+
+            /*animation-fill-mode: forwards|backwards|both;
+               forwords:会保留动画结束时的状态
+               backwords:不会保留动画结束时的状态；
+               both:会保留动画结束时的状态
+            设置动画结束时状态,动画结束时，默认会恢复原来状态*/
+            animation-fill-mode: forwards;
+            /*设置动画的时间函数*/
+            animation-timing-function: linear;
+            /*设置动画的播放状态 paused 暂停 running 播放*/
+            animation-play-state: running;
+
+        }
+
+        @keyframes moveTest {
+            0% {
+                transform: translate(100px);
+            }
+            50% {
+                transform: translate(100px, 200px);
+            }
+            100% {
+                transform: translate(200px, 400px);
+            }
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>
+```
+

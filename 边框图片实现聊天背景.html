@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .border{
+            width:300px;
+            height:auto;
+            border:10px solid #ffffff;
+            border-image-slice: 10 fill;
+            border-image-width: 10px;
+            border-image-source:url("./public/images/border.png");
+        }
+        .border2{
+            border-image-repeat: repeat;
+        }
+        .border3{
+            border-image-repeat: round;
+        }
+    </style>
 </head>
 <body>
-
+    <div class="border">我要测试边框图片,我要测试边框图片,我要测试边框图片</div>
+    <div class="border border2">我要测试边框图片,我要测试边框图片,我要测试边框图片</div>
+    <div class="border border3">我要测试边框图片,我要测试边框图片,我要测试边框图片</div>
 </body>
 </html>
